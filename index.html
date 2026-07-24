@@ -16,7 +16,19 @@
          font-size:.875rem; color:#171717; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.05); outline:none; transition:all .2s; }
   .fld:focus { border-color:#0055aa; box-shadow:0 0 0 3px rgba(0,85,170,.25); }
   .lbl { display:block; font-size:.8125rem; font-weight:600; color:#003366; margin:0 0 .375rem .25rem; }
-  .perfil-card.on { border-color:#0055aa; background:#f0f7ff; box-shadow:0 0 0 3px rgba(0,85,170,.2); }
+  .op-card { display:flex; flex-direction:column; align-items:flex-start; gap:.5rem;
+             border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.05);
+             backdrop-filter:blur(4px); border-radius:1rem; padding:1.25rem;
+             text-align:left; font-size:.9375rem; font-weight:600; color:#fff; transition:all .2s; }
+  .op-card:hover { background:rgba(255,255,255,.12); transform:translateY(-2px); }
+  .op-card small { font-size:.75rem; font-weight:400; line-height:1.3; color:rgba(191,219,254,.6); }
+  .op-card.on small { color:rgba(255,255,255,.75); }
+  .op-card.on { border-color:#fff; background:rgba(255,255,255,.18); box-shadow:0 0 0 3px rgba(255,255,255,.25); }
+  .btn-avancar { display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+                 background:#A6192E; color:#fff; font-weight:700; text-transform:uppercase;
+                 letter-spacing:.03em; padding:.9rem 2.5rem; border-radius:.85rem;
+                 box-shadow:0 10px 25px rgba(166,25,46,.35); transition:all .2s; }
+  .btn-avancar:hover { background:#8B1526; }
   @media (prefers-reduced-motion: reduce) { *{transition:none!important; animation:none!important; scroll-behavior:auto!important;} }
 </style>
 </head>
@@ -46,52 +58,115 @@
     <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/a1e8f719-a743-4cc6-851e-05a745f29a6f_800w.png"
          alt="Dellamed" class="md:h-16 h-12 w-auto object-contain opacity-90 mix-blend-screen drop-shadow-xl mt-4">
 
-    <h1 class="leading-tight md:text-5xl lg:text-6xl text-4xl font-semibold tracking-tighter text-center mt-14 mb-6">
-      Bem-vindo ao Portal de Solicitações do Pós-Vendas
+    <h1 class="leading-[1.5] text-3xl md:text-5xl font-semibold tracking-tighter text-center mt-14 mb-6">
+      Você chegou no Portal de<br class="hidden sm:inline">
+      <span class="sm:whitespace-nowrap"> Solicitações de Devoluções</span>
     </h1>
     <p class="md:text-xl text-lg font-medium text-blue-100/85 text-center max-w-2xl mb-10">
       Faça sua solicitação de forma simples.
     </p>
 
-    <!-- ======= TELA 1: ESCOLHA DO PERFIL ======= -->
-    <div id="tela-perfil" class="w-full max-w-4xl">
-      <p class="text-center text-sm font-semibold uppercase tracking-widest text-blue-200/60 mb-6">
-        Escolha seu perfil para começar
-      </p>
-      <div class="grid md:grid-cols-3 gap-4">
-        <a href="#lojista" class="rota-card group block rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 transition-all hover:bg-white/10 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/60">
-          <iconify-icon icon="solar:shop-2-linear" class="text-3xl text-blue-200"></iconify-icon>
-          <h2 class="mt-3 text-lg font-semibold tracking-tight">Cliente Lojista</h2>
-          <p class="mt-1 text-sm text-blue-200/70 leading-relaxed">Você compra da Dellamed e quer devolver ou refaturar uma nota.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-white/90 group-hover:gap-2 transition-all">
-            Abrir formulário <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
-          </span>
-        </a>
-        <a href="#interno" class="rota-card group block rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 transition-all hover:bg-white/10 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/60">
-          <iconify-icon icon="solar:headphones-round-linear" class="text-3xl text-blue-200"></iconify-icon>
-          <h2 class="mt-3 text-lg font-semibold tracking-tight">Vendedor Interno</h2>
-          <p class="mt-1 text-sm text-blue-200/70 leading-relaxed">Você atende da sede e abre a solicitação em nome do cliente.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-white/90 group-hover:gap-2 transition-all">
-            Abrir formulário <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
-          </span>
-        </a>
-        <a href="#representante" class="rota-card group block rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 transition-all hover:bg-white/10 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/60">
-          <iconify-icon icon="solar:case-round-linear" class="text-3xl text-blue-200"></iconify-icon>
-          <h2 class="mt-3 text-lg font-semibold tracking-tight">Representante</h2>
-          <p class="mt-1 text-sm text-blue-200/70 leading-relaxed">Você atende em campo e abre a solicitação em nome do cliente.</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-white/90 group-hover:gap-2 transition-all">
-            Abrir formulário <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
-          </span>
-        </a>
+    <!-- ======= PASSOS ======= -->
+    <div class="flex items-center gap-2 mb-8" id="passos">
+      <span data-passo="1" class="h-1.5 w-10 rounded-full bg-white/80"></span>
+      <span data-passo="2" class="h-1.5 w-10 rounded-full bg-white/20"></span>
+      <span data-passo="3" class="h-1.5 w-10 rounded-full bg-white/20"></span>
+    </div>
+
+    <!-- ======= ETAPA 1: ONDE ADQUIRIU ======= -->
+    <div id="etapa-1" class="w-full max-w-4xl">
+      <div class="rounded-3xl border border-white/15 bg-white/[0.04] backdrop-blur-sm p-6 sm:p-10">
+        <p class="text-center text-xs font-bold uppercase tracking-[0.2em] text-[#ff8fa0] mb-4">Primeiro passo</p>
+        <h2 class="text-2xl md:text-4xl font-bold tracking-tight text-center leading-tight">
+          Onde você adquiriu seu produto?
+        </h2>
+        <p class="text-center text-base text-blue-100/70 mt-3 mb-8 max-w-xl mx-auto">
+          Essa resposta define o caminho da sua devolução. Escolha a opção mais parecida com a sua compra.
+        </p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3" id="grid-origem">
+          <button type="button" class="op-card" data-valor="Site Dellamed">
+            <iconify-icon icon="solar:global-linear" class="text-2xl text-blue-200"></iconify-icon>
+            <span>Site Dellamed</span>
+            <small>Compra em dellamed.com.br</small>
+          </button>
+          <button type="button" class="op-card" data-valor="Marketplace">
+            <iconify-icon icon="solar:cart-large-2-linear" class="text-2xl text-blue-200"></iconify-icon>
+            <span>Marketplace</span>
+            <small>Mercado Livre, Amazon, Magalu ou Shopee</small>
+          </button>
+          <button type="button" class="op-card" data-valor="Vendedor Dellamed">
+            <iconify-icon icon="solar:user-speak-rounded-linear" class="text-2xl text-blue-200"></iconify-icon>
+            <span>Vendedor Dellamed</span>
+            <small>Compra direta com a equipe Dellamed</small>
+          </button>
+          <button type="button" class="op-card" data-valor="Distribuidor/Revenda">
+            <iconify-icon icon="solar:box-linear" class="text-2xl text-blue-200"></iconify-icon>
+            <span>Distribuidor ou revenda</span>
+            <small>Compra para revender</small>
+          </button>
+          <button type="button" class="op-card" data-valor="Loja física">
+            <iconify-icon icon="solar:shop-linear" class="text-2xl text-blue-200"></iconify-icon>
+            <span>Loja física</span>
+            <small>Compra presencial em loja</small>
+          </button>
+          <button type="button" class="op-card" data-valor="Outro">
+            <iconify-icon icon="solar:question-circle-linear" class="text-2xl text-blue-200"></iconify-icon>
+            <span>Outro</span>
+            <small>Nenhuma das opções acima</small>
+          </button>
+        </div>
+
+        <div id="caixa-outro" class="hidden mt-4">
+          <label class="block text-sm font-medium text-blue-100/80 mb-2" for="origem_outro">Conta pra gente onde foi:</label>
+          <input id="origem_outro" maxlength="80" placeholder="Ex.: indicação de profissional, feira, compra no exterior"
+            class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/40 outline-none focus:border-white/60 focus:ring-2 focus:ring-white/20">
+        </div>
+
+        <div class="mt-8 flex flex-col items-center gap-5">
+          <button type="button" id="ir-2" class="btn-avancar opacity-40 pointer-events-none">
+            Continuar <iconify-icon icon="solar:arrow-right-linear" class="text-xl"></iconify-icon>
+          </button>
+          <label class="flex items-center gap-2 text-sm text-blue-200/60 cursor-pointer hover:text-blue-100">
+            <input type="checkbox" id="em-nome-de" class="accent-white">
+            Sou vendedor interno ou representante e estou abrindo em nome do cliente
+          </label>
+        </div>
       </div>
     </div>
 
-    <!-- ======= TELA 2: FORMULÁRIO ======= -->
-    <div class="hidden w-full max-w-2xl relative z-10" id="formulario">
+    <!-- ======= ETAPA 2: PF OU PJ ======= -->
+    <div id="etapa-2" class="hidden w-full max-w-2xl">
+      <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-center mb-2" id="titulo-etapa2">
+        A compra foi feita como pessoa física ou pessoa jurídica?
+      </h2>
+      <p class="text-center text-sm text-blue-200/60 mb-8">Isso define quais dados vamos pedir a seguir.</p>
+
+      <div class="grid sm:grid-cols-2 gap-3" id="grid-pessoa">
+        <button type="button" class="op-card !py-8" data-valor="Pessoa física">
+          <iconify-icon icon="solar:user-linear" class="text-3xl text-blue-200"></iconify-icon>
+          <span>Pessoa física</span>
+          <small class="block text-xs font-normal text-blue-200/50 mt-1">Compra no CPF</small>
+        </button>
+        <button type="button" class="op-card !py-8" data-valor="Pessoa jurídica">
+          <iconify-icon icon="solar:buildings-3-linear" class="text-3xl text-blue-200"></iconify-icon>
+          <span>Pessoa jurídica</span>
+          <small class="block text-xs font-normal text-blue-200/50 mt-1">Compra no CNPJ</small>
+        </button>
+      </div>
+
+      <div class="mt-8 flex justify-center">
+        <button type="button" class="voltar text-sm font-medium text-blue-200/60 hover:text-white inline-flex items-center gap-1" data-para="1">
+          <iconify-icon icon="solar:arrow-left-linear"></iconify-icon> Voltar
+        </button>
+      </div>
+    </div>
+
+    <!-- ======= ETAPA 3: FORMULÁRIO ======= -->
+    <div id="etapa-3" class="hidden w-full max-w-2xl relative z-10">
       <div class="absolute -inset-1 bg-gradient-to-r from-white/20 via-white/5 to-white/20 opacity-50 rounded-[2rem] blur-xl"></div>
       <div class="relative bg-white border-2 border-[#0055aa]/40 rounded-2xl p-6 sm:p-10 shadow-2xl shadow-[#0055aa]/20">
 
-        <!-- sucesso -->
         <div id="sucesso" class="hidden flex-col items-center text-center py-10 gap-4">
           <iconify-icon icon="solar:check-circle-bold" class="text-7xl text-emerald-500"></iconify-icon>
           <h3 class="text-2xl md:text-3xl font-bold text-[#003366] tracking-tight">Solicitação registrada</h3>
@@ -101,78 +176,111 @@
         </div>
 
         <form id="form" novalidate>
-          <a href="#" id="btn-voltar" class="inline-flex items-center gap-1 text-sm font-semibold text-[#0055aa] hover:underline mb-4">
-            <iconify-icon icon="solar:arrow-left-linear"></iconify-icon> Trocar perfil
-          </a>
-          <div class="flex items-center gap-3 mb-8 pb-4 border-b border-[#0055aa]/15">
-            <iconify-icon id="perfil-icone" icon="solar:shop-2-linear" class="text-3xl text-[#0055aa]"></iconify-icon>
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-widest text-[#0055aa]/70">Formulário</p>
-              <h2 id="perfil-titulo" class="text-xl md:text-2xl font-bold text-[#003366] tracking-tight">Cliente Lojista</h2>
+          <button type="button" class="voltar inline-flex items-center gap-1 text-sm font-semibold text-[#0055aa] hover:underline mb-4" data-para="2">
+            <iconify-icon icon="solar:arrow-left-linear"></iconify-icon> Voltar
+          </button>
+
+          <div class="mb-6 pb-4 border-b border-[#0055aa]/15">
+            <p class="text-xs font-semibold uppercase tracking-widest text-[#0055aa]/70">Seus dados e o que aconteceu</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <span id="tag-origem" class="text-xs font-semibold px-3 py-1 rounded-full bg-[#0055aa]/10 text-[#003366]"></span>
+              <span id="tag-pessoa" class="text-xs font-semibold px-3 py-1 rounded-full bg-[#0055aa]/10 text-[#003366]"></span>
             </div>
           </div>
-          <input type="hidden" id="perfil" name="perfil" value="">
 
-          <!-- bloco varejo -->
-          <div id="bloco-varejo" class="hidden space-y-4 mb-4">
-            <div><label class="lbl" for="v_cnpj">CNPJ da empresa *</label>
-              <input class="fld" id="v_cnpj" placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric"></div>
-            <div><label class="lbl" for="v_contato">Nome do contato *</label>
-              <input class="fld" id="v_contato" placeholder="Nome completo"></div>
+          <!-- quem abre em nome do cliente -->
+          <div id="bloco-agente" class="hidden space-y-4 mb-6 p-4 rounded-xl bg-[#0055aa]/5 border border-[#0055aa]/15">
+            <p class="text-xs font-bold uppercase tracking-widest text-[#0055aa]/70">Quem está abrindo</p>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="lbl" for="v_email">E-mail *</label>
-                <input class="fld" id="v_email" type="email" placeholder="contato@empresa.com.br"></div>
-              <div><label class="lbl" for="v_tel">Telefone *</label>
-                <input class="fld" id="v_tel" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric"></div>
+              <div><label class="lbl" for="a_nome">Seu nome *</label>
+                <input class="fld" id="a_nome" placeholder="Nome completo"></div>
+              <div><label class="lbl" for="a_email">Seu e-mail *</label>
+                <input class="fld" id="a_email" type="email" placeholder="seu@dellamed.com.br"></div>
             </div>
           </div>
 
-          <!-- bloco representante -->
-          <div id="bloco-rep" class="hidden space-y-4 mb-4">
-            <div><label class="lbl" for="r_nome">Seu nome *</label>
-              <input class="fld" id="r_nome" placeholder="Nome completo"></div>
+          <!-- pessoa física -->
+          <div id="bloco-pf" class="hidden space-y-4 mb-4">
+            <div><label class="lbl" for="pf_nome">Nome completo *</label>
+              <input class="fld" id="pf_nome" placeholder="Como está na nota fiscal"></div>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="lbl" for="r_email">Seu e-mail *</label>
-                <input class="fld" id="r_email" type="email" placeholder="seu@dellamed.com.br"></div>
-              <div><label class="lbl" for="r_tel">Seu telefone *</label>
-                <input class="fld" id="r_tel" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric"></div>
+              <div><label class="lbl" for="pf_cpf">CPF *</label>
+                <input class="fld" id="pf_cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric"></div>
+              <div><label class="lbl" for="pf_tel">Telefone *</label>
+                <input class="fld" id="pf_tel" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric"></div>
             </div>
-            <div><label class="lbl" for="r_cnpj">CNPJ do cliente *</label>
-              <input class="fld" id="r_cnpj" placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric"></div>
-            <div><label class="lbl" for="r_cliente">Nome do cliente *</label>
-              <input class="fld" id="r_cliente" placeholder="Razão social ou nome fantasia"></div>
+            <div><label class="lbl" for="pf_email">E-mail *</label>
+              <input class="fld" id="pf_email" type="email" placeholder="seu@email.com"></div>
           </div>
 
-          <!-- dados da solicitação -->
-          <div id="bloco-caso" class="hidden space-y-4">
+          <!-- pessoa jurídica -->
+          <div id="bloco-pj" class="hidden space-y-4 mb-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="lbl" for="pj_cnpj">CNPJ *</label>
+                <input class="fld" id="pj_cnpj" placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric"></div>
+              <div><label class="lbl" for="pj_razao">Razão social ou nome fantasia *</label>
+                <input class="fld" id="pj_razao" placeholder="Nome da empresa"></div>
+            </div>
+            <div><label class="lbl" for="pj_contato">Nome do contato *</label>
+              <input class="fld" id="pj_contato" placeholder="Quem acompanha a solicitação"></div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="lbl" for="pj_email">E-mail *</label>
+                <input class="fld" id="pj_email" type="email" placeholder="contato@empresa.com.br"></div>
+              <div><label class="lbl" for="pj_tel">Telefone *</label>
+                <input class="fld" id="pj_tel" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric"></div>
+            </div>
+          </div>
+
+          <!-- dados do caso -->
+          <div class="space-y-4">
             <div class="h-px bg-[#0055aa]/15 my-2"></div>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="lbl" for="tipo">Tipo de solicitação *</label>
-                <select class="fld" id="tipo">
-                  <option value="">Selecione</option>
-                  <option>Devolução</option>
-                  <option>Refaturamento</option>
-                </select></div>
-              <div><label class="lbl" for="nf">Nº da nota fiscal *</label>
-                <input class="fld" id="nf" placeholder="Ex.: 123456" inputmode="numeric"></div>
+              <div><label class="lbl" for="nf">Nota fiscal de origem *</label>
+                <input class="fld" id="nf" placeholder="Nº da NF ou do pedido"></div>
+              <div><label class="lbl" for="produto">Produto *</label>
+                <input class="fld" id="produto" placeholder="Modelo ou código do item"></div>
             </div>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="lbl" for="motivo">Motivo *</label>
-                <select class="fld" id="motivo">
+
+            <div class="grid sm:grid-cols-3 gap-4">
+              <div><label class="lbl" for="quantidade">Quantidade *</label>
+                <input class="fld" id="quantidade" type="number" min="1" step="1" placeholder="Ex.: 2" inputmode="numeric"></div>
+              <div><label class="lbl" for="lote">Lote</label>
+                <input class="fld" id="lote" placeholder="Se houver"></div>
+              <div><label class="lbl" for="coleta">Necessita coleta? *</label>
+                <select class="fld" id="coleta">
                   <option value="">Selecione</option>
-                  <option>Produto avariado no transporte</option>
-                  <option>Divergência de item ou quantidade</option>
-                  <option>Erro nos dados de faturamento</option>
-                  <option>Recusa de recebimento pelo cliente</option>
-                  <option>Erro na digitação do pedido</option>
-                  <option>Produto com defeito de fabricação</option>
-                  <option>Outro</option>
+                  <option>Sim</option>
+                  <option>Não</option>
                 </select></div>
-              <div><label class="lbl" for="pedido">Nº do pedido</label>
-                <input class="fld" id="pedido" placeholder="Opcional"></div>
             </div>
-            <div><label class="lbl" for="detalhe">Detalhes *</label>
-              <textarea class="fld" id="detalhe" rows="3" placeholder="Itens envolvidos, quantidades e o que aconteceu."></textarea></div>
+
+            <div><label class="lbl" for="motivo">Motivo da devolução *</label>
+              <select class="fld" id="motivo">
+                <option value="">Selecione</option>
+                <option>Produto avariado no transporte</option>
+                <option>Produto com defeito de fabricação</option>
+                <option>Divergência de item ou quantidade</option>
+                <option class="op-b2c">Arrependimento da compra (até 7 dias)</option>
+                <option class="op-b2c">Produto não atendeu à expectativa</option>
+                <option class="op-b2b">Erro nos dados de faturamento</option>
+                <option class="op-b2b">Recusa de recebimento pelo cliente</option>
+                <option class="op-b2b">Erro na digitação do pedido</option>
+                <option>Outro</option>
+              </select></div>
+
+            <div><label class="lbl" for="detalhe">Descreva o que aconteceu *</label>
+              <textarea class="fld" id="detalhe" rows="3" placeholder="Conte o problema com suas palavras e desde quando ele aparece."></textarea></div>
+
+            <div>
+              <label class="lbl" for="fotos">Imagens da irregularidade e das etiquetas *</label>
+              <label for="fotos" class="flex flex-col items-center justify-center gap-1 border-2 border-dashed border-[#0055aa]/30 rounded-xl py-6 cursor-pointer hover:border-[#0055aa] hover:bg-[#0055aa]/5 transition-all">
+                <iconify-icon icon="solar:gallery-add-linear" class="text-3xl text-[#0055aa]"></iconify-icon>
+                <span class="text-sm font-semibold text-[#003366]">Toque para anexar imagens</span>
+                <span class="text-xs text-neutral-500">Até 5 fotos, JPG ou PNG. Inclua o defeito e a etiqueta com lote e modelo.</span>
+              </label>
+              <input type="file" id="fotos" accept="image/*" multiple class="hidden">
+              <div id="previa" class="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-3"></div>
+            </div>
 
             <label class="flex items-start gap-2 text-xs text-neutral-600 leading-relaxed">
               <input type="checkbox" id="lgpd" class="mt-0.5">
@@ -218,9 +326,9 @@ document.addEventListener('DOMContentLoaded', function () {
      EMAIL    : cópia por e-mail via FormSubmit. Vazio = desativado.
   ================================================================ */
   var CONFIG = {
-    API_URL: 'https://script.google.com/macros/s/AKfycby1HW2EkWa6sQ6ZurGAzkfTYyM3clROB39ip2PJ_2mpL11IbNGQwifPyKicaWTgoQqA/exec',
-    PLANILHA: 'https://docs.google.com/spreadsheets/d/1VzAIV0pKlN-Wl_9z-bmwUhQwkBDlKYdNVD9a00J5CW8/edit',
-    EMAIL: 'marketing@dellamed.com.br'
+    API_URL: 'https://script.google.com/macros/s/AKfycbw-SK4TAMwR2Wdpav9SEd_0wZRNAM9uSDbnng5TWJz2-k-JqkQW8__89LARhxwzfcNSkA/exec',
+    PLANILHA: 'https://docs.google.com/spreadsheets/d/1-vzZzLIGfMmmLrI7jl02BZ4Pg5H52lw__1FPgfBmx_Q/edit',
+    EMAIL: 'sabrina.incerti@dellamed.com.br'
   };
 
   var $ = function (id) { return document.getElementById(id); };
@@ -247,8 +355,19 @@ document.addEventListener('DOMContentLoaded', function () {
       el.value = out;
     });
   }
-  ['v_cnpj', 'r_cnpj'].forEach(function (id) { mascaraCNPJ($(id)); });
-  ['v_tel', 'r_tel'].forEach(function (id) { mascaraTel($(id)); });
+  ['pj_cnpj'].forEach(function (id) { mascaraCNPJ($(id)); });
+  ['pf_tel', 'pj_tel'].forEach(function (id) { mascaraTel($(id)); });
+
+  function mascaraCPF(el) {
+    el.addEventListener('input', function () {
+      var v = el.value.replace(/\D/g, '').slice(0, 11), out = v;
+      if (v.length > 3) out = v.slice(0,3) + '.' + v.slice(3);
+      if (v.length > 6) out = v.slice(0,3) + '.' + v.slice(3,6) + '.' + v.slice(6);
+      if (v.length > 9) out = v.slice(0,3) + '.' + v.slice(3,6) + '.' + v.slice(6,9) + '-' + v.slice(9);
+      el.value = out;
+    });
+  }
+  mascaraCPF($('pf_cpf'));
 
   function cnpjValido(str) {
     var c = String(str).replace(/\D/g, '');
@@ -261,52 +380,169 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     return dig(c.slice(0,12)) === +c[12] && dig(c.slice(0,13)) === +c[13];
   }
+  function cpfValido(str) {
+    var c = String(str).replace(/\D/g, '');
+    if (c.length !== 11 || /^(\d)\1+$/.test(c)) return false;
+    function dig(qtd) {
+      var s = 0;
+      for (var i = 0; i < qtd; i++) { s += c[i] * (qtd + 1 - i); }
+      var r = (s * 10) % 11;
+      return r === 10 ? 0 : r;
+    }
+    return dig(9) === +c[9] && dig(10) === +c[10];
+  }
   function emailValido(v) { return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(v); }
 
-  /* ---------- navegação entre telas (hash) ---------- */
-  var PERFIS = {
-    'lojista':       { nome: 'Cliente Lojista',  icone: 'solar:shop-2-linear',           lojista: true  },
-    'interno':       { nome: 'Vendedor Interno', icone: 'solar:headphones-round-linear', lojista: false },
-    'representante': { nome: 'Representante',    icone: 'solar:case-round-linear',       lojista: false }
-  };
+  /* ---------- estado e navegação em etapas ---------- */
+  var estado = { origem: '', origemOutro: '', pessoa: '', emNomeDe: false };
 
-  function abrirTela() {
-    var chave = (location.hash || '').replace('#', '');
-    var perfil = PERFIS[chave];
-    var telaPerfil = $('tela-perfil');
-    var telaForm = $('formulario');
+  function marcarPassos(n) {
+    document.querySelectorAll('#passos span').forEach(function (el) {
+      var i = +el.getAttribute('data-passo');
+      el.className = 'h-1.5 w-10 rounded-full ' + (i <= n ? 'bg-white/80' : 'bg-white/20');
+    });
+  }
 
-    if (!perfil) {
-      telaForm.classList.add('hidden');
-      telaPerfil.classList.remove('hidden');
-      $('perfil').value = '';
-      return;
-    }
-
-    telaPerfil.classList.add('hidden');
-    telaForm.classList.remove('hidden');
-    $('perfil').value = perfil.nome;
-    $('perfil-titulo').textContent = perfil.nome;
-    $('perfil-icone').setAttribute('icon', perfil.icone);
-    $('bloco-varejo').classList.toggle('hidden', !perfil.lojista);
-    $('bloco-rep').classList.toggle('hidden', perfil.lojista);
-    $('bloco-caso').classList.remove('hidden');
-    $('form').classList.remove('hidden');
-    $('sucesso').classList.add('hidden');
-    $('sucesso').classList.remove('flex');
+  function irPara(n) {
+    ['etapa-1', 'etapa-2', 'etapa-3'].forEach(function (id, i) {
+      $(id).classList.toggle('hidden', (i + 1) !== n);
+    });
+    marcarPassos(n);
+    if (n === 3) { prepararFormulario(); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  $('btn-voltar').addEventListener('click', function (ev) {
-    ev.preventDefault();
-    $('form').reset();
-    location.hash = '';
-    if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
-    abrirTela();
+  /* etapa 1: origem da compra */
+  document.querySelectorAll('#grid-origem .op-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      document.querySelectorAll('#grid-origem .op-card').forEach(function (c) { c.classList.remove('on'); });
+      card.classList.add('on');
+      estado.origem = card.getAttribute('data-valor');
+      var outro = (estado.origem === 'Outro');
+      $('caixa-outro').classList.toggle('hidden', !outro);
+      if (outro) { $('origem_outro').focus(); }
+      liberarAvancar();
+    });
   });
 
-  window.addEventListener('hashchange', abrirTela);
-  abrirTela();
+  $('origem_outro').addEventListener('input', liberarAvancar);
+
+  function liberarAvancar() {
+    var btn = $('ir-2');
+    var ok = !!estado.origem && (estado.origem !== 'Outro' || $('origem_outro').value.trim().length > 2);
+    btn.classList.toggle('opacity-40', !ok);
+    btn.classList.toggle('pointer-events-none', !ok);
+  }
+
+  $('em-nome-de').addEventListener('change', function () {
+    estado.emNomeDe = this.checked;
+    $('titulo-etapa2').textContent = this.checked
+      ? 'A compra do cliente foi feita como pessoa física ou jurídica?'
+      : 'A compra foi feita como pessoa física ou pessoa jurídica?';
+  });
+
+  $('ir-2').addEventListener('click', function () {
+    estado.origemOutro = $('origem_outro').value.trim();
+    irPara(2);
+  });
+
+  /* etapa 2: pessoa física ou jurídica */
+  document.querySelectorAll('#grid-pessoa .op-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      document.querySelectorAll('#grid-pessoa .op-card').forEach(function (c) { c.classList.remove('on'); });
+      card.classList.add('on');
+      estado.pessoa = card.getAttribute('data-valor');
+      setTimeout(function () { irPara(3); }, 180);
+    });
+  });
+
+  /* voltar */
+  document.querySelectorAll('.voltar').forEach(function (btn) {
+    btn.addEventListener('click', function () { irPara(+btn.getAttribute('data-para')); });
+  });
+
+  /* etapa 3: monta o formulário conforme as respostas */
+  function prepararFormulario() {
+    var pf = (estado.pessoa === 'Pessoa física');
+    $('bloco-pf').classList.toggle('hidden', !pf);
+    $('bloco-pj').classList.toggle('hidden', pf);
+    $('bloco-agente').classList.toggle('hidden', !estado.emNomeDe);
+
+    $('tag-origem').textContent = estado.origem === 'Outro'
+      ? 'Origem: ' + (estado.origemOutro || 'outro')
+      : 'Origem: ' + estado.origem;
+    $('tag-pessoa').textContent = estado.pessoa;
+
+    // motivos por natureza da compra
+    document.querySelectorAll('#motivo .op-b2c').forEach(function (o) { o.classList.toggle('hidden', !pf); });
+    document.querySelectorAll('#motivo .op-b2b').forEach(function (o) { o.classList.toggle('hidden', pf); });
+
+    $('sucesso').classList.add('hidden');
+    $('sucesso').classList.remove('flex');
+    $('form').classList.remove('hidden');
+  }
+
+  marcarPassos(1);
+
+  /* ---------- anexos de imagem ---------- */
+  var MAX_FOTOS = 5, LADO_MAX = 1400, QUALIDADE = 0.72;
+  var anexos = [];   // [{nome, dados(base64 sem cabeçalho)}]
+
+  function comprimir(arquivo) {
+    return new Promise(function (resolve, reject) {
+      var leitor = new FileReader();
+      leitor.onerror = reject;
+      leitor.onload = function () {
+        var img = new Image();
+        img.onerror = reject;
+        img.onload = function () {
+          var escala = Math.min(1, LADO_MAX / Math.max(img.width, img.height));
+          var cv = document.createElement('canvas');
+          cv.width = Math.round(img.width * escala);
+          cv.height = Math.round(img.height * escala);
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          var url = cv.toDataURL('image/jpeg', QUALIDADE);
+          resolve({ nome: arquivo.name.replace(/\.[^.]+$/, '') + '.jpg', dados: url.split(',')[1], url: url });
+        };
+        img.src = leitor.result;
+      };
+      leitor.readAsDataURL(arquivo);
+    });
+  }
+
+  function desenharPrevia() {
+    $('previa').innerHTML = anexos.map(function (a, i) {
+      return '<div class="relative group">' +
+        '<img src="' + a.url + '" class="h-20 w-full object-cover rounded-lg border border-[#0055aa]/20">' +
+        '<button type="button" data-remover="' + i + '" title="Remover" ' +
+        'class="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[#A6192E] text-white text-xs font-bold shadow">&times;</button>' +
+        '</div>';
+    }).join('');
+    $('previa').querySelectorAll('[data-remover]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        anexos.splice(+b.getAttribute('data-remover'), 1);
+        desenharPrevia();
+      });
+    });
+  }
+
+  $('fotos').addEventListener('change', function () {
+    var lista = Array.prototype.slice.call(this.files);
+    var erro = $('erro');
+    if (anexos.length + lista.length > MAX_FOTOS) {
+      erro.textContent = 'Máximo de ' + MAX_FOTOS + ' fotos por solicitação.';
+      erro.classList.remove('hidden');
+      lista = lista.slice(0, MAX_FOTOS - anexos.length);
+    }
+    Promise.all(lista.map(comprimir)).then(function (prontos) {
+      anexos = anexos.concat(prontos);
+      desenharPrevia();
+    }).catch(function () {
+      erro.textContent = 'Não consegui ler uma das imagens. Tente outro arquivo.';
+      erro.classList.remove('hidden');
+    });
+    this.value = '';
+  });
 
   /* ---------- acesso da equipe ---------- */
   var linkEquipe = $('btn-area-equipe');
@@ -319,57 +555,85 @@ document.addEventListener('DOMContentLoaded', function () {
     var erro = $('erro');
     erro.classList.add('hidden');
 
-    var perfil = $('perfil').value;
-    if (!perfil) { return falhar('Selecione o perfil de quem está abrindo a solicitação.'); }
+    function falhar(msg) {
+      erro.textContent = msg;
+      erro.classList.remove('hidden');
+      erro.scrollIntoView({ block: 'center' });
+      return false;
+    }
+
+    var pf = (estado.pessoa === 'Pessoa física');
 
     var reg = {
       data: new Date().toISOString(),
-      perfil: perfil,
-      tipo: $('tipo').value,
+      origem: estado.origem === 'Outro' ? 'Outro: ' + estado.origemOutro : estado.origem,
+      pessoa: estado.pessoa,
+      perfil: estado.emNomeDe ? 'Aberto pela equipe Dellamed' : 'Aberto pelo próprio cliente',
+      agente: '',
+      agenteEmail: '',
+      tipo: 'Devolução',
       nf: $('nf').value.trim(),
-      pedido: $('pedido').value.trim(),
+      produto: $('produto').value.trim(),
+      quantidade: $('quantidade').value.trim(),
+      lote: $('lote').value.trim(),
+      coleta: $('coleta').value,
       motivo: $('motivo').value,
       detalhe: $('detalhe').value.trim(),
-      status: 'Recebida'
+      status: 'Recebida',
+      anexos: anexos.map(function (a) { return { nome: a.nome, dados: a.dados }; })
     };
 
-    if (perfil === 'Cliente Lojista') {
-      reg.solicitante = $('v_contato').value.trim();
-      reg.email = $('v_email').value.trim();
-      reg.telefone = $('v_tel').value.trim();
-      reg.cliente = reg.solicitante;
-      reg.cnpj = $('v_cnpj').value.trim();
-      if (!reg.solicitante) return falhar('Informe o nome do contato.');
-    } else {
-      reg.solicitante = $('r_nome').value.trim();
-      reg.email = $('r_email').value.trim();
-      reg.telefone = $('r_tel').value.trim();
-      reg.cliente = $('r_cliente').value.trim();
-      reg.cnpj = $('r_cnpj').value.trim();
-      if (!reg.solicitante) return falhar('Informe seu nome.');
-      if (!reg.cliente) return falhar('Informe o nome do cliente.');
+    if (estado.emNomeDe) {
+      reg.agente = $('a_nome').value.trim();
+      reg.agenteEmail = $('a_email').value.trim();
+      if (!reg.agente) return falhar('Informe seu nome.');
+      if (!emailValido(reg.agenteEmail)) return falhar('Informe um e-mail válido para quem está abrindo.');
     }
+
+    if (pf) {
+      reg.cliente = $('pf_nome').value.trim();
+      reg.solicitante = reg.cliente;
+      reg.documento = $('pf_cpf').value.trim();
+      reg.email = $('pf_email').value.trim();
+      reg.telefone = $('pf_tel').value.trim();
+      if (reg.cliente.split(' ').length < 2) return falhar('Informe o nome completo.');
+      if (!cpfValido(reg.documento)) return falhar('CPF inválido. Confira os dígitos.');
+    } else {
+      reg.cliente = $('pj_razao').value.trim();
+      reg.solicitante = $('pj_contato').value.trim();
+      reg.documento = $('pj_cnpj').value.trim();
+      reg.email = $('pj_email').value.trim();
+      reg.telefone = $('pj_tel').value.trim();
+      if (!cnpjValido(reg.documento)) return falhar('CNPJ inválido. Confira os dígitos.');
+      if (!reg.cliente) return falhar('Informe a razão social ou nome fantasia.');
+      if (!reg.solicitante) return falhar('Informe o nome do contato.');
+    }
+
+    reg.cnpj = reg.documento;
 
     if (!emailValido(reg.email)) return falhar('E-mail inválido.');
     if (reg.telefone.replace(/\D/g, '').length < 10) return falhar('Telefone incompleto.');
-    if (!cnpjValido(reg.cnpj)) return falhar('CNPJ inválido. Confira os dígitos.');
-    if (!reg.tipo) return falhar('Selecione o tipo de solicitação.');
-    if (!reg.nf) return falhar('Informe o número da nota fiscal.');
-    if (!reg.motivo) return falhar('Selecione o motivo.');
+    if (!reg.nf) return falhar('Informe a nota fiscal de origem.');
+    if (!reg.produto) return falhar('Informe o produto.');
+    if (!reg.quantidade || +reg.quantidade < 1) return falhar('Informe a quantidade, no mínimo 1.');
+    if (!reg.coleta) return falhar('Informe se o produto precisa ser coletado.');
+    if (!reg.motivo) return falhar('Selecione o motivo da devolução.');
     if (reg.detalhe.length < 10) return falhar('Descreva o caso com um pouco mais de detalhe.');
+    if (!anexos.length) return falhar('Anexe ao menos uma imagem da irregularidade ou da etiqueta.');
     if (!$('lgpd').checked) return falhar('É necessário autorizar o uso dos dados.');
-
-    function falhar(msg) { erro.textContent = msg; erro.classList.remove('hidden'); erro.scrollIntoView({block:'center'}); return false; }
 
     var btn = $('btn-enviar');
     var textoOriginal = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = 'Enviando...';
+    btn.innerHTML = anexos.length ? 'Enviando fotos...' : 'Enviando...';
 
     function copiaPorEmail(protocoloGerado) {
       if (!CONFIG.EMAIL) return Promise.resolve();
       var fd = new FormData();
-      Object.keys(reg).forEach(function (k) { fd.append(k, reg[k]); });
+      Object.keys(reg).forEach(function (k) {
+        if (k !== 'anexos') { fd.append(k, reg[k]); }
+      });
+      fd.append('fotos_anexadas', reg.anexos.length);
       fd.append('protocolo', protocoloGerado || 'sem protocolo');
       fd.append('_subject', 'Solicitação ' + (protocoloGerado || '') + ' - ' + reg.tipo);
       fd.append('_captcha', 'false');
@@ -413,7 +677,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('btn-nova').addEventListener('click', function () {
     $('form').reset();
-    abrirTela();
+    anexos = [];
+    desenharPrevia();
+    estado = { origem: '', origemOutro: '', pessoa: '', emNomeDe: false };
+    document.querySelectorAll('.op-card').forEach(function (c) { c.classList.remove('on'); });
+    $('caixa-outro').classList.add('hidden');
+    $('sucesso').classList.add('hidden');
+    $('sucesso').classList.remove('flex');
+    $('form').classList.remove('hidden');
+    liberarAvancar();
+    irPara(1);
   });
 
 });
